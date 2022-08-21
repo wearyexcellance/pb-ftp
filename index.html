@@ -1,0 +1,138 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <meta charset='utf8'>
+</head>
+<body>
+<div id='ruffle'></div>
+<script src='ruffle.js'></script>
+<script>
+
+var swfobject = {};
+
+swfobject.embedSWF = function(url, cont, width, height){
+    var ruffle = window.RufflePlayer.newest(),
+        player = Object.assign(document.getElementById(cont).appendChild(ruffle.createPlayer()), {
+            width: width,
+            height: height,
+            style: 'width: ' + width + 'px; height: ' + height + 'px',
+        });
+
+    player.load({ url: url, allowScriptAccess: true });
+}
+
+var h = window.innerHeight*0.99
+var w = window.innerWidth*0.99
+swfobject.embedSWF('plazma_burst.swf', 'ruffle', w, h);
+function myFunction() {
+   let player = document.querySelector("ruffle-player");
+      let pointerEvent = new PointerEvent("pointerdown");
+       console.log("dispatching...")
+      player.dispatchEvent(pointerEvent);
+      let gameEvent = new KeyboardEvent('keydown', {
+        key:"ArrowRight",code: "ArrowRight", keyCode: 39, bubbles: true,
+      });
+      player.dispatchEvent(gameEvent);
+     // leave()
+}
+function leave() {
+   let player = document.querySelector("ruffle-player");
+      let pointerEvent = new PointerEvent("pointerup");
+      player.dispatchEvent(pointerEvent);
+      console.log("leaving")
+      let gameEvent1 = new KeyboardEvent('keyup', {
+        key:"ArrowRight",code: "ArrowRight", keyCode: 39, bubbles: true,
+      });
+      player.dispatchEvent(gameEvent1);
+}
+
+function myFunction2() {
+   let player = document.querySelector("ruffle-player");
+      let pointerEvent = new PointerEvent("pointerdown");
+       console.log("dispatching...")
+      player.dispatchEvent(pointerEvent);
+      let gameEvent = new KeyboardEvent('keydown', {
+        key:"ArrowUp",code: "ArrowUp", keyCode: 39, bubbles: true,
+      });
+      player.dispatchEvent(gameEvent);
+     // leave()
+}
+function leave2() {
+   let player = document.querySelector("ruffle-player");
+      let pointerEvent = new PointerEvent("pointerup");
+      player.dispatchEvent(pointerEvent);
+      console.log("leaving")
+      let gameEvent1 = new KeyboardEvent('keyup', {
+        key:"ArrowUp",code: "ArrowUp", keyCode: 39, bubbles: true,
+      });
+      player.dispatchEvent(gameEvent1);
+}
+function Simulate_Key(POINTER,DIR,KEYCODE) {
+   let player = document.querySelector("ruffle-player");
+      let pointerEvent = new PointerEvent(POINTER);
+      player.dispatchEvent(pointerEvent);
+      console.log("leaving")
+      let gameEvent1 = new KeyboardEvent(DIR, {
+        key:KEYCODE,code: KEYCODE, keyCode: 39, bubbles: true,
+      });
+      player.dispatchEvent(gameEvent1);
+}
+        </script>
+<script src="main.js"></script>
+<script src="joystick.js"></script>
+<script src="joy.js"></script>
+<div id="joyDiv" style="width:200px;height:200px;margin-bottom:0px;  position: absolute;
+  left: 10px;
+  top: 270px; "></div>
+
+</body>
+<script type="text/javascript">
+// Create JoyStick object into the DIV 'joyDiv'
+joy_pos_x = w/4
+joy_pos_y = h/8
+var joy = new JoyStick('joyDiv');
+console.log(joy.GetDir())
+
+
+
+window.onload = function() {
+     function test() {
+console.log(joy.GetDir())
+    if (joy.GetDir() ==="N" )
+    {
+    Simulate_Key("pointerdown","keydown","ArrowUp")
+    }
+
+
+else if (joy.GetDir() ==="C" )
+     {
+         Simulate_Key("pointerup","keyup","ArrowUp")
+            Simulate_Key("pointerup","keyup","ArrowRight")
+                     Simulate_Key("pointerup","keyup","ArrowLeft")
+                       Simulate_Key("pointerup","keyup","ArrowDown")
+
+     }
+else if (joy.GetDir() ==="E" )
+     {
+         Simulate_Key("pointerdown","keydown","ArrowRight")
+
+     }
+     else if (joy.GetDir() ==="W" )
+     {
+         Simulate_Key("pointerdown","keydown","ArrowLeft")
+
+     }
+         else if (joy.GetDir() ==="S" )
+     {
+         Simulate_Key("pointerdown","keydown","ArrowDown")
+
+     }
+
+
+ }
+   setInterval(test, 10);}
+
+
+
+</script>
+</html>
